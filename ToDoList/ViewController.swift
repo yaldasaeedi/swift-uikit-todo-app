@@ -19,9 +19,9 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
     @IBOutlet weak var btnDelete: UIButton!
     @IBOutlet var main: UIView!
     @IBOutlet weak var txtField: UITextField!
-    var test = ["hi", "hiiii"]
+    var test : [String] = ["hi"]
 //function
-    
+
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -59,6 +59,13 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         cell.textLabel!.text = test[indexPath.row]
         return cell
     }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            test.remove(at: indexPath.row)
+            tableView.reloadData() // Refresh the table view after removing the element
+        }
+    }
+
     
-    
+
 }
