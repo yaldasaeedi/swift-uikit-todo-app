@@ -9,17 +9,19 @@
 import UIKit
 
 
-class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSource{
+class ViewController: UIViewController{
     
     //outlet
     
 
     @IBOutlet weak var tblList: UITableView!
     @IBOutlet weak var btnAdd: UIButton!
-    @IBOutlet weak var btnDelete: UIButton!
     @IBOutlet var main: UIView!
     @IBOutlet weak var txtField: UITextField!
-    var test : [String] = ["hi"]
+    @IBOutlet weak var searchBar: UITableView!
+    
+    var test : [String] = []
+    var search : [String] = []
 //function
 
     override func viewDidLoad() {
@@ -28,7 +30,10 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         // Do any additional setup after loading the view, typically from a nib.
         tblList.dataSource = self
         tblList.delegate = self
+        searchBar.delegate = self
+
         main.backgroundColor = .black
+        search = test
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,10 +48,24 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         }
         
         test.append(text)
-        tblList.reloadData()
+        let indexPath = IndexPath(row: test.count - 1, section: 0)
+        tblList.insertRows(at: [indexPath], with: .automatic)
         txtField.text = ""
     }
-    
+}
+extension ViewController : UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else{
+            search = test
+            tblList.reloadData()
+            return
+        }
+        search = test.filter({(String) -> Bool in
+        return String.contains(searchText)})
+        tblList.reloadData()
+    }
+}
+extension ViewController : UITableViewDelegate, UITableViewDataSource{
     func numberOfSections(in tableView:UITableView) -> Int{
         return 1;
     }
@@ -62,10 +81,11 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             test.remove(at: indexPath.row)
-            tableView.reloadData() // Refresh the table view after removing the element
+            tblList.deleteRows(at: [indexPath], with: .fade)
+            //tableView.reloadData()
         }
     }
-
+}
     
 
-}
+
