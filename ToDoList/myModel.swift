@@ -7,62 +7,82 @@
 //
 
 import Foundation
+import UIKit
+
+enum Category{
+    case shopping
+    case study
+    case work
+    case personal
+    
+}
+struct ToDoItem {
+     var title : String
+     var subtitle : String
+     var date : Data
+     var category : Category
+    init(fTitle: String, fSubtitle : String , fCategory: Category , fDate : Data){
+        self.title = fTitle
+        self.subtitle = fSubtitle
+        self.date = fDate
+        self.category = fCategory
+    }
+}
+
 
 class Model {
     
-    private var todoItems : [String] = ["Hiiii", "hi", "Yalda", "Hoorad", "Saeed", "Hoshang"]
+    private var toDoItems : [ToDoItem] = []
+    private var mirrorItems : [ToDoItem] = []
+
     
-    private var mirorItems : [String] = []
     
     func getTodoItems() -> [String]{
-        
-        if mirorItems.count > 0{
-            return mirorItems
+        let toDoTitle = getAllTitles()
+        if mirrorItems.count > 0{
+            
+            return toDoTitle
         }else{
-            return todoItems
+            
+            return toDoTitle
         }
     }
     
     
-    func setTodoItems(updateToDo : [String]){
-        todoItems = updateToDo
+    func setTodoItems(updateToDo : [ToDoItem]){
+        toDoItems = updateToDo
+    }
+    func getAllTitles() -> [String] {
+        return toDoItems.map { $0.title }
     }
     
     func searchItems(searchText: String){
-        
-        let temp : [String] = todoItems.filter({ (item) -> Bool in
+        let toDoTitle = getAllTitles()
+        let temp : [String] = toDoTitle.filter({ (item) -> Bool in
             
             return item.contains(searchText)
         })
-        mirorItems = temp
+        //toDoItems = temp
     }
     
-
-    func appendInToDo(text : String) -> IndexPath{
+    func addingTitle(newTitle : String) -> String {
+        return newTitle
+    }
+    func addingSubtitle(newSubtitle : String) -> String {
+        return newSubtitle
+    }
+    func addingDate(newDate : Data) -> Data {
+        return newDate
+    }
+    func addingCategory(newCategory : Category) -> Category{
+        return newCategory
+    }
+    func addingNewToDo(fTitle: String, fSubtitle : String , fCategory: Category , fDate : Data) -> IndexPath{
         
-        todoItems.append(text)
-        let indexPath = IndexPath(row: todoItems.count - 1, section: 0)
+        let newToDo = ToDoItem(fTitle: fTitle, fSubtitle : fSubtitle , fCategory: fCategory , fDate : fDate)
+        toDoItems.append(newToDo)
+        let indexPath = IndexPath(row: toDoItems.count - 1, section: 0)
         return indexPath
     }
     
-    
-    //    var getToDo : [String] {
-    //
-    //        get{
-    //
-    //            return todoItems
-    //        }
-    //    }
-    //
-    //    var getSetFiltered : [String] {
-    //
-    //        get{
-    //            return filteredItems
-    //        }set{
-    //            
-    //        }
-    //        
-    //    }
-
-
 }

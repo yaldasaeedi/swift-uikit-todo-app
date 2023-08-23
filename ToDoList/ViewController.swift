@@ -11,14 +11,11 @@ import UIKit
 
 class ViewController: UIViewController{
     
+    @IBOutlet var main: UIView!
     @IBOutlet weak var tblList: UITableView!
     @IBOutlet weak var btnAdd: UIButton!
-    @IBOutlet var main: UIView!
-    @IBOutlet weak var txtField: UITextField!
     @IBOutlet weak var searchBtn: UIButton!
-
     @IBOutlet weak var searchTxtField: UITextField!
-
     
     var myModel = Model()
     
@@ -28,53 +25,20 @@ class ViewController: UIViewController{
         
         tblList.dataSource = self
         tblList.delegate = self
-        searchBtn.backgroundColor = UIColor.blue
     }
 
-    @IBAction func addClicked(_ sender: Any) {
+    @IBAction func searchClicked(_ sender: Any) {
         
-        guard let text = txtField.text, !text.isEmpty else {
+        guard let text = searchTxtField.text, !text.isEmpty else {
             
             return
         }
-        //let indexPath = myModel.appendInToDo(text: Text)
-        //tblList.insertRows(at: [indexPath], with: .automatic)
-        //txtField.text = ""
-        
-        
         self.myModel.searchItems(searchText: text)
         self.tblList.reloadData()
-    }
-    
-    @IBAction func onTextChanged(_ sender: UITextField) {
-        
-    }
-    
-    @IBAction func didEndEditing(_ sender: UITextField) {
-        
-        print(sender.text)
-    }
-}
 
-extension ViewController: UISearchBarDelegate {
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-//        guard !searchText.isEmpty else {
-//            myModel.setFilteredItems(updatefiltered: myModel.getTodoItems())
-//            tblList.reloadData()
-//            print(myModel.getTodoItems())
-//            print(myModel.getFilteredItems())
-//            return
-//        }
-//        let temp : [String] = myModel.getTodoItems().filter({ (String) -> Bool in
-//            return String.contains(searchText)
-//        })
-//        myModel.setFilteredItems(updatefiltered: temp)
-//        tblList.reloadData()
     }
+    
 }
-
 extension ViewController: UITableViewDelegate, UITableViewDataSource{
 
     func numberOfSections(in tableView:UITableView) -> Int{
@@ -92,10 +56,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
         cell.textLabel!.text = myModel.getTodoItems()[indexPath.row]
         return cell
-    }
+}
     
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    /*func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             
@@ -107,6 +71,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
 //            tableView.reloadData()
         }
     }
+    */
 }
     
 
