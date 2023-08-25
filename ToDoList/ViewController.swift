@@ -41,6 +41,11 @@ class ViewController: UIViewController{
         self.tblList.reloadData()
 
     }
+    @IBAction func addNewItem(_ sender: Any) {
+        let addVC = ViewControllerForAdd()
+        addVC.delegate = self 
+        present(addVC, animated: true, completion: nil)
+    }
     
 }
 
@@ -79,5 +84,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
     */
 }
     
-
+extension ViewController: ViewControllerForAddDelegate {
+    func didAddNewItem(title: String, subtitle: String, date: Date, category: Model.Category) {
+        let newToDo = ToDoItem(title: title, subtitle: subtitle, date: date, category: category)
+        myModel.addTodoItem(newToDo)
+        tblList.reloadData()
+    }
+}
 
