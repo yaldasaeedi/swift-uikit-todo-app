@@ -21,18 +21,15 @@ class ViewControllerForAdd: UIViewController{
     @IBOutlet weak var categoryPv: UIPickerView!
     @IBOutlet weak var addBtn: UIButton!
     
-    var myTitle : String = ""
-    var mySubtitle : String = ""
-    var myDate = Date()
-    var myCategory = Category.self // check it
-    let  mainStoryBoard : self.storybord // check it
+    weak var delegate: ViewControllerForAddDelegate?
+    //let  mainStoryBoard : self.storybord // check it
     
     @IBAction func titleClicked(_ sender: Any) {
         guard let text = titleTf.text, !text.isEmpty else {
             
             return
         }
-        mainStoryBoard.title = text
+        //mainStoryBoard.title = text
     }
     
     @IBAction func subtitleClicked(_ sender: Any) {
@@ -40,7 +37,7 @@ class ViewControllerForAdd: UIViewController{
             
             return
         }
-        mainStoryBoard.subtitle = text
+       // mainStoryBoard.subtitle = text
     }
     
     @IBAction func dateClicked(_ sender: Any) {
@@ -53,13 +50,25 @@ class ViewControllerForAdd: UIViewController{
         dateBtn.isHidden = true
     }
   
-   /* @IBAction func finalAdd(_ sender: Any) {
-        var myToDo = ToDoItem()
-    }*/
+   @IBAction func finalAdd(_ sender: Any) {
+    // Assuming you've collected the data here
+    let title = myTitle
+    let subtitle = mySubtitle
+    let date = myDate
+    let category = myCategory
+
+    // Call the delegate method to pass data
+    delegate?.didAddNewItem(title: title, subtitle: subtitle, date: date, category: category)
+
+    // Dismiss the ViewControllerForAdd
+    self.dismiss(animated: true, completion: nil)
+}
     
         
 }
-
+protocol ViewControllerForAddDelegate: AnyObject {
+    func didAddNewItem(title: String, subtitle: String, date: Date, category: Model.Category)
+}
 
 
 
