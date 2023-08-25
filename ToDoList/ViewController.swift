@@ -18,6 +18,10 @@ class ViewController: UIViewController{
     @IBOutlet weak var searchTxtField: UITextField!
     
     var myModel = Model()
+    var title = ""
+    var subtitle = ""
+    var category : Model.Category 
+    var date : Date 
     
     override func viewDidLoad() {
         
@@ -39,6 +43,7 @@ class ViewController: UIViewController{
     }
     
 }
+
 extension ViewController: UITableViewDelegate, UITableViewDataSource{
 
     func numberOfSections(in tableView:UITableView) -> Int{
