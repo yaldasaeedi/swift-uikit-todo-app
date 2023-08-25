@@ -25,22 +25,24 @@ class ViewControllerForAdd: UIViewController{
     var mySubtitle : String = ""
     var myDate = Date()
     var myCategory = Category.self // check it
+    let  mainStoryBoard : self.storybord // check it
     
     @IBAction func titleClicked(_ sender: Any) {
         guard let text = titleTf.text, !text.isEmpty else {
             
             return
         }
-        myTitle = text
+        mainStoryBoard.title = text
     }
+    
     @IBAction func subtitleClicked(_ sender: Any) {
         guard let text = subtitleTf.text, !text.isEmpty else {
             
             return
         }
-        mySubtitle = text
-
+        mainStoryBoard.subtitle = text
     }
+    
     @IBAction func dateClicked(_ sender: Any) {
         dateBtn.isHidden = false
         dateBtn.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
@@ -53,8 +55,7 @@ class ViewControllerForAdd: UIViewController{
   
    /* @IBAction func finalAdd(_ sender: Any) {
         var myToDo = ToDoItem()
-    }
-*/
+    }*/
     
         
 }
